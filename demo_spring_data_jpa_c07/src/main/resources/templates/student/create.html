@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Thêm mới</h2>
+<form action="/students/create" method="post" th:object="${student}">
+<!--    ID:-->
+<!--    <input th:field="*{id}"><br>-->
+    Name:
+    <input th:field="*{name}"><br>
+    Gender:
+    <input  th:field="*{gender}" type="radio" value="true">Male
+    <input th:field="*{gender}" type="radio" value="false">Female<br>
+    Class
+     <select th:field="*{classId}">
+         <option value="1">C07</option>
+         <option value="2">C08</option>
+         <option value="3">C09</option>
+     </select>
+    <button> Lưu </button>
+</form>
+</body>
+</html>
