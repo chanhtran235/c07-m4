@@ -8,8 +8,8 @@
 <body>
 <th:block th:replace="~{layout/laylout::header}"></th:block>
 <a href="/students/create">Thêm mới sinh viên</a>
-<form action="/students/search" method="get">
-    <input name="searchName" placeholder="enter name">
+<form action="/students" method="get">
+    <input name="searchName" placeholder="enter name" th:value="${searchName}">
     <button type="submit">Tìm kiê</button>
 </form>
 <h1>Danh sách sinh viên</h1>
@@ -23,7 +23,7 @@
         <th>Detail1</th>
         <th>Detail2</th>
     </tr>
-    <tr th:each="student,status:${studentList}">
+    <tr th:each="student,status:${studentPage.content}">
         <td th:text="${status.count}"></td>
         <td th:text="${student.id}"></td>
         <td th:text="${student.name}"></td>
@@ -31,15 +31,14 @@
             <span th:case="true" th:text="${'Male'}"></span>
             <span th:case="false" th:text="${'Female'}"></span>
         </td>
-        <td th:text="${student.classId}"></td>
+        <td th:text="${student.getClasses().getName()}"></td>
         <td><a th:href="@{students/detail(id=${student.id})}">Detail1</a></td>
         <td><a th:href="@{students/detail/__${student.id}__}">Detail2</a></td>
-        <td th:text="${student.classId}"></td>
-    </tr>
-    <tr>
-        <td colspan="6" th:if="${studentList.isEmpty()}" th:text="${'Danh sách rỗng'}"></td>
     </tr>
 </table>
+<a  th:if="${studentPage.hasPrevious()}" th:href="@{/students(page=${studentPage.number - 1},searchName=${searchName})}">Pre</a>
+<span th:text="${studentPage.number +1}"></span>/<span th:text="${studentPage.totalPages}"></span>
+<a  th:if="${studentPage.hasNext()}" th:href="@{/students(page=${studentPage.number +1 },searchName=${searchName})}">Next</a>
 <th:block th:replace="~{layout/laylout::footer}"></th:block>
 </body>
 </html>

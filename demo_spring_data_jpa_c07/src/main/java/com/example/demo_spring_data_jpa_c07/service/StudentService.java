@@ -3,6 +3,8 @@ package com.example.demo_spring_data_jpa_c07.service;
 import com.example.demo_spring_data_jpa_c07.model.Student;
 import com.example.demo_spring_data_jpa_c07.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,11 @@ public class StudentService implements IStudentService{
     @Override
     public List<Student> seachByName(String searchName) {
         return studentRepository.searchByName("%"+searchName+"%");
+    }
+
+    @Override
+    public Page<Student> searchByName(String name, Pageable pageable) {
+        return studentRepository.findStudentByNameContaining(name,pageable);
     }
 
     @Override

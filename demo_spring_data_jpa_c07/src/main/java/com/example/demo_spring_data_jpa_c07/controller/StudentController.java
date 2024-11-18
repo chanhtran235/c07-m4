@@ -4,6 +4,11 @@ package com.example.demo_spring_data_jpa_c07.controller;
 import com.example.demo_spring_data_jpa_c07.model.Student;
 import com.example.demo_spring_data_jpa_c07.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,19 +29,46 @@ public class StudentController {
 
     }
 
+//    @GetMapping("")
+//    public String showList(Model model){
+//        List<Student> studentList = studentService.findAll();
+//        model.addAttribute("studentList",studentList);
+//        return "student/list";
+//    }
+
+
+//    @GetMapping("/search")
+//    public String search(@RequestParam String searchName, Model model){
+//        List<Student> studentList = studentService.seachByName(searchName);
+//        model.addAttribute("studentList",studentList);
+//        return "student/list";
+//    }
+
+//    @GetMapping("")
+//    public String search(@PageableDefault(size = 2,sort = "name", direction = Sort.Direction.ASC) Pageable pageable,
+//                         @RequestParam(required = false,defaultValue = "") String searchName,
+//                         Model model){
+//        Page<Student> studentPage = studentService.searchByName(searchName,pageable);
+//        model.addAttribute("studentPage",studentPage);
+//        model.addAttribute("searchName",searchName);
+//        return "student/list";
+//    }
+
     @GetMapping("")
-    public String showList(Model model){
-        List<Student> studentList = studentService.findAll();
-        model.addAttribute("studentList",studentList);
+    public String search(@RequestParam(required = false, defaultValue = "0") int page,
+//                        @RequestParam(required = false, defaultValue = "0") int size,
+                         @RequestParam(required = false,defaultValue = "") String searchName,
+                         Model model){
+        Sort sort = Sort.by( Sort.Direction.ASC,"name").and(Sort.by("gender"));
+        Pageable pageable = PageRequest.of(page,2,sort);
+        Page<Student> studentPage = studentService.searchByName(searchName,pageable);
+        model.addAttribute("studentPage",studentPage);
+        model.addAttribute("searchName",searchName);
         return "student/list";
     }
 
-    @GetMapping("/search")
-    public String search(@RequestParam String searchName, Model model){
-        List<Student> studentList = studentService.seachByName(searchName);
-        model.addAttribute("studentList",studentList);
-        return "student/list";
-    }
+
+
 //    @GetMapping("/students")
 //    public ModelAndView showList(){
 //        List<Student> studentList = studentService.findAll();
