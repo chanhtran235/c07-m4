@@ -1,8 +1,11 @@
 package com.example.demo_spring_data_jpa_c07.controller;
 
 
+import com.example.demo_spring_data_jpa_c07.dto.StudentDto;
 import com.example.demo_spring_data_jpa_c07.model.Student;
 import com.example.demo_spring_data_jpa_c07.service.IStudentService;
+import com.example.demo_spring_data_jpa_c07.validate.CustomValidate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -80,7 +85,7 @@ public class StudentController {
 
     @GetMapping("/create")
     public String showFormCreate(Model model){
-        model.addAttribute("student", new Student());
+        model.addAttribute("studentDto", new StudentDto());
         return "/student/create";
     }
     @GetMapping("/detail")
@@ -96,7 +101,13 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public String save(@ModelAttribute Student student,RedirectAttributes redirectAttributes){
+    public String save(@Validated @ModelAttribute StudentDto studentDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        Student student = new Student();
+        new StudentDto().validate(studentDto,bindingResult);
+        if (bindingResult.hasErrors()){
+            return "/student/create";
+        }
+        BeanUtils.copyProperties(studentDto,student);
         studentService.save(student);
         redirectAttributes.addFlashAttribute("mess", "thanh cong");
         return "redirect:/students";

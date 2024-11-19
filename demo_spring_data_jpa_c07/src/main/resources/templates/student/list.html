@@ -19,7 +19,7 @@
         <th>ID</th>
         <th>Name</th>
         <th>Gender</th>
-        <th>Class Id</th>
+<!--        <th>Class Id</th>-->
         <th>Detail1</th>
         <th>Detail2</th>
     </tr>
@@ -31,7 +31,7 @@
             <span th:case="true" th:text="${'Male'}"></span>
             <span th:case="false" th:text="${'Female'}"></span>
         </td>
-        <td th:text="${student.getClasses().getName()}"></td>
+<!--        <td th:text="${student.getClasses().getName()}"></td>-->
         <td><a th:href="@{students/detail(id=${student.id})}">Detail1</a></td>
         <td><a th:href="@{students/detail/__${student.id}__}">Detail2</a></td>
     </tr>
