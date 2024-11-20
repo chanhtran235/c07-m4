@@ -2,6 +2,7 @@ package com.example.demo_spring_data_jpa_c07.controller;
 
 
 import com.example.demo_spring_data_jpa_c07.dto.StudentDto;
+import com.example.demo_spring_data_jpa_c07.exception.AdminException;
 import com.example.demo_spring_data_jpa_c07.model.Student;
 import com.example.demo_spring_data_jpa_c07.service.IStudentService;
 import com.example.demo_spring_data_jpa_c07.validate.CustomValidate;
@@ -64,6 +65,7 @@ public class StudentController {
 //                        @RequestParam(required = false, defaultValue = "0") int size,
                          @RequestParam(required = false,defaultValue = "") String searchName,
                          Model model){
+
         Sort sort = Sort.by( Sort.Direction.ASC,"name").and(Sort.by("gender"));
         Pageable pageable = PageRequest.of(page,2,sort);
         Page<Student> studentPage = studentService.searchByName(searchName,pageable);
@@ -101,7 +103,7 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public String save(@Validated @ModelAttribute StudentDto studentDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String save(@Validated @ModelAttribute StudentDto studentDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws AdminException {
         Student student = new Student();
         new StudentDto().validate(studentDto,bindingResult);
         if (bindingResult.hasErrors()){

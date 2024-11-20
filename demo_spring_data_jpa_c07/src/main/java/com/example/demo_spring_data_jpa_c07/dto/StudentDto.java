@@ -31,7 +31,7 @@ public class StudentDto implements Validator {
        StudentDto studentDto = (StudentDto) target;
        if ("".equals(studentDto.getName())){
            errors.rejectValue("name", null, "Not Empty");
-       }else if (!studentDto.getName().matches("^[A-Z][a-z]*(\\s[A-Z][a-z]+)+$")){
+       }else if (!studentDto.getName().matches("^[A-Z][a-z]*(\\s[A-Z][a-z]+)*$")){
            errors.rejectValue("name", null, "Not Match");
        }
     }

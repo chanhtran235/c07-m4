@@ -1,5 +1,6 @@
 package com.example.demo_spring_data_jpa_c07.service;
 
+import com.example.demo_spring_data_jpa_c07.exception.AdminException;
 import com.example.demo_spring_data_jpa_c07.model.Student;
 import com.example.demo_spring_data_jpa_c07.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,10 @@ public class StudentService implements IStudentService{
     }
 
     @Override
-    public void save(Student student) {
+    public void save(Student student) throws AdminException{
+        if ("Admin".equals(student.getName())){
+            throw new AdminException("trung tên Admin");
+        }
         studentRepository.save(student);
     }
 

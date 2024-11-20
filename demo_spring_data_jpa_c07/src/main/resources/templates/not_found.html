@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:insert="~{layout/layout::library}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout/laylout::header}"></th:block>
+<div>
+    <div class="img">
+        <img src="https://cdn.24h.com.vn//images/404img_092018.png" alt="">
+    </div>
+    <div class="inner">
+        <p class="name">Truy cập của bạn có thể bị lỗi hoặc không tìm thấy nội dung</p>
+        <a href="/" class="backBtn">Quay lại trang chủ</a>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>
