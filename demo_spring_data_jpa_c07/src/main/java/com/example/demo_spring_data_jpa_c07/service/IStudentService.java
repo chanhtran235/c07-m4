@@ -11,7 +11,8 @@ public interface IStudentService {
     List<Student> findAll();
     List<Student> seachByName(String searchName);
     Page<Student> searchByName(String name, Pageable pageable);
-    void save(Student student)throws AdminException;
+    void save(Student student);
     Student findById(int id);
+    void delete(int id);
 
 }

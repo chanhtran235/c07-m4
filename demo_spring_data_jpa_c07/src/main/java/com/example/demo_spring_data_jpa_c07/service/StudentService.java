@@ -30,15 +30,18 @@ public class StudentService implements IStudentService{
     }
 
     @Override
-    public void save(Student student) throws AdminException{
-        if ("Admin".equals(student.getName())){
-            throw new AdminException("trung tên Admin");
-        }
+    public void save(Student student){
+
         studentRepository.save(student);
     }
 
     @Override
     public Student findById(int id) {
         return studentRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(int id) {
+        studentRepository.deleteById(id);
     }
 }
